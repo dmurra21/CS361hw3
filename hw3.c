@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <unistd.h>
 
 int main(){
 
@@ -33,5 +34,21 @@ int main(){
 	int j=0; 
 	for (;j<i;j++){
 		printf("argsarray[%d]: %s\n", j, argsarray[j]);
-	}  
+	}
+
+	char *argarray[] = {"/bin/ls", "-l", (char *)0};
+
+	int pid = fork();
+  	if (pid == 0) {
+    		printf("Child with pid %d, about to exec ls\n", getpid());
+    		execv(argarray[0], argarray);
+  	} 
+
+	else {
+    		printf("I am the parent.  I am waiting for my child %d to die.\n", pid);
+    		int status;
+    		wait(&status);
+    		printf("My child has died with status %d. :(\n", (status));
+ 	}
+  
 }
