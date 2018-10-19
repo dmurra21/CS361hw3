@@ -3,6 +3,18 @@
 #include <signal.h>
 #include <unistd.h>
 
+void Fork(char *cmd){
+  int pid = fork();
+  if(pid == 0){
+     
+  }
+  else{
+    int status;
+    wait(&status);
+    printf("pid: %d status: %d \n", pid, WEXITSTATUS(status));
+  }
+}
+
 void execute(char **command) {
 
 }
